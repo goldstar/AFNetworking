@@ -65,6 +65,10 @@
  SSL with certificate pinning is strongly recommended for any application that transmits sensitive information to an external webservice.
 
  When `defaultSSLPinningMode` is defined on `AFHTTPClient` and the Security framework is linked, connections will be validated on all matching certificates with a `.cer` extension in the bundle root.
+ 
+ ## App Extensions
+ 
+ When using AFNetworking in an App Extension, `#define AF_APP_EXTENSIONS` to avoid using unavailable APIs.
 
  ## NSCoding & NSCopying Conformance
 
@@ -249,8 +253,8 @@ NSCoding, NSCopying>
  Specifies that the operation should continue execution after the app has entered the background, and the expiration handler for that background task.
 
  @param handler A handler to be called shortly before the application’s remaining background time reaches 0. The handler is wrapped in a block that cancels the operation, and cleans up and marks the end of execution, unlike the `handler` parameter in `UIApplication -beginBackgroundTaskWithExpirationHandler:`, which expects this to be done in the handler itself. The handler is called synchronously on the main thread, thus blocking the application’s suspension momentarily while the application is notified.
- */
-#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+  */
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED) && !defined(AF_APP_EXTENSIONS)
 - (void)setShouldExecuteAsBackgroundTaskWithExpirationHandler:(void (^)(void))handler;
 #endif
 
